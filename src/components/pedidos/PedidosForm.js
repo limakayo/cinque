@@ -9,7 +9,7 @@ import { observer } from 'mobx-react'
 import { CircularProgress } from 'material-ui/Progress'
 import ClienteDownshift from '../ClienteDownshift'
 import Typography from 'material-ui/Typography'
-import { FormGroup, FormControlLabel, FormControl } from 'material-ui/Form'
+import { FormControlLabel, FormControl } from 'material-ui/Form'
 import Select from 'material-ui/Select'
 import { MenuItem } from 'material-ui/Menu'
 import Input, { InputLabel } from 'material-ui/Input'
@@ -18,10 +18,7 @@ import { ListItemText } from 'material-ui/List'
 import Currency from '../Currency'
 import Switch from 'material-ui/Switch'
 import Dialog, { 
-	DialogActions,
-	DialogContent,
-	DialogContentText,
-	DialogTitle } from 'material-ui/Dialog';
+	DialogContent } from 'material-ui/Dialog';
 
 
 const styles = theme => ({
@@ -96,7 +93,6 @@ const PedidosFormComponent = observer(class PedidosFormComponent extends Compone
 	render() {
 		const {
 			classes,
-			handleSubmit,
 			handleChange,
 			handleClienteSelected,
 			clientes,

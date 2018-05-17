@@ -7,7 +7,7 @@ const ID_TOKEN_KEY = 'id_token';
 const ACCESS_TOKEN_KEY = 'access_token';
 const CLIENT_ID = 'oj7Mkm63IjyJgFtMiVs23NKVD5Hym0AM';
 const CLIENT_DOMAIN = 'cinque.auth0.com';
-const REDIRECT = 'http://localhost:3000/callback';
+const REDIRECT = 'https://cinqueloja.herokuapp.com/callback';
 const SCOPE = 'openid profile email';
 const AUDIENCE = 'https://cinque.auth0.com/userinfo';
 

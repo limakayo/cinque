@@ -102,9 +102,7 @@ const ClientesFormComponent = observer(class ClientesFormComponent extends Compo
 	render() {
 		const {
 			classes,
-			handleSubmit,
 			handleChange,
-			handleDelete,
 			handleBlur
 		} = this.props
 

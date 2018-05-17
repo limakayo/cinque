@@ -97,9 +97,7 @@ const VestidosFormComponent = observer(class VestidosFormComponent extends Compo
 	render() {
 		const {
 			classes,
-			handleSubmit,
 			handleChange,
-			handleDelete
 		} = this.props
 
 		const { vestido, isLoaded } = vestidoStore

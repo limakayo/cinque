@@ -11,7 +11,6 @@ import Tabs, { Tab } from 'material-ui/Tabs'
 import AppBar from 'material-ui/AppBar'
 import SwipeableViews from 'react-swipeable-views'
 import Typography from 'material-ui/Typography'
-import ListSubheader from 'material-ui/List/ListSubheader'
 
 import { observer } from 'mobx-react'
 import pedidoStore from '../../stores/PedidoStore'
@@ -77,7 +76,6 @@ const PedidoComponent = observer(class PedidoComponent extends Component {
       pedidosAPostar, 
       pedidosPostados, 
       pedidosEncomendas,
-      pedidosEntregues 
     } = this.props
     const { isLoaded } = pedidoStore
 

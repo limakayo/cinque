@@ -88,7 +88,6 @@ const PedidosViewComponent = observer(class PedidosViewComponent extends Compone
 	render() {
 		const {
 			classes,
-			handleDelete
 		} = this.props
 
 		const { pedido, isLoaded } = pedidoStore
