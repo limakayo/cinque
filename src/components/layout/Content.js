@@ -66,7 +66,7 @@ const styles = theme => ({
       marginTop: 60
     },
     [theme.breakpoints.down('sm')]: {
-      marginTop: 60
+      marginTop: 56
     },
   },
 });
