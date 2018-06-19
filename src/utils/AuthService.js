@@ -7,14 +7,14 @@ const ID_TOKEN_KEY = 'id_token';
 const ACCESS_TOKEN_KEY = 'access_token';
 const CLIENT_ID = 'oj7Mkm63IjyJgFtMiVs23NKVD5Hym0AM';
 const CLIENT_DOMAIN = 'cinque.auth0.com';
-const REDIRECT = 'https://708ybjd-cinque.wedeploy.io/callback';
+//const REDIRECT = 'https://cinque.wedeploy.io/callback';
+const REDIRECT = 'http://localhost:3000/callback';
 const SCOPE = 'openid profile email';
 const AUDIENCE = 'https://cinque.auth0.com/userinfo';
 
 var options = {
   avatar: null,
   autoclose: true,
-  closable: false,
   rememberLastLogin: true,
   allowAutocomplete: true,
   auth: {
@@ -52,7 +52,7 @@ export function logout() {
   userStore.removeProfile()
   // push history
   history.push('/')
-  lock.show()
+  //lock.show()
 }
 
 export function requireAuth(nextState, replace) {

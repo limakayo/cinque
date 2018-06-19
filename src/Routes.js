@@ -10,6 +10,8 @@ import VestidosForm from './containers/VestidosForm'
 import Pedidos from './containers/Pedidos'
 import PedidosView from './containers/PedidosView'
 import PedidosForm from './containers/PedidosForm'
+import Compras from './containers/Compras'
+import ComprasForm from './containers/ComprasForm'
 
 import { isLoggedIn } from './utils/AuthService'
 
@@ -29,7 +31,7 @@ const Routes = () => (
     )}/>
     <PrivateRoute exact path="/clientes" component={Clientes}/>
     <PrivateRoute path="/clientes/cadastrar" component={ClientesForm}/>
-	<PrivateRoute path="/clientes/editar/:id" component={ClientesForm}/>
+	  <PrivateRoute path="/clientes/editar/:id" component={ClientesForm}/>
     <PrivateRoute exact path="/vestidos" component={Vestidos}/>
     <PrivateRoute path="/vestidos/cadastrar" component={VestidosForm}/>
     <PrivateRoute path="/vestidos/editar/:id" component={VestidosForm}/>
@@ -37,6 +39,9 @@ const Routes = () => (
     <PrivateRoute path="/pedidos/cadastrar" component={PedidosForm}/>
     <PrivateRoute path="/pedidos/view/:id" component={PedidosView}/>
     <PrivateRoute path="/pedidos/editar/:id" component={PedidosForm}/>
+    <PrivateRoute exact path="/compras" component={Compras}/>
+    <PrivateRoute path="/compras/cadastrar" component={ComprasForm}/>
+    <PrivateRoute path="/compras/editar/:id" component={ComprasForm}/>
     <Route path="/callback" component={Callback}/>
   </div>
 )

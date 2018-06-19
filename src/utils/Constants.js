@@ -1,1 +1,2 @@
-export const URL = "https://cinque.herokuapp.com/api"
+export const URL = "https://server-cinque.wedeploy.io/api"
+//export const URL = "http://localhost/api"

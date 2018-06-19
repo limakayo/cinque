@@ -27,6 +27,11 @@ const Menu = (props) => {
             title="Pedidos">
             <Icon>assignment</Icon>
           </MenuItem>
+          <MenuItem
+            location="/compras"
+            title="Compras">
+            <Icon>shopping_basket</Icon>
+          </MenuItem>
         </div>
       ) : null}
     </div>

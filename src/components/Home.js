@@ -87,20 +87,26 @@ const images = [
   {
     url: 'images/clientes.jpg',
     title: 'Clientes',
-    width: '33.333%',
+    width: '25%',
     location: '/clientes'
   },
   {
     url: 'images/vestidos.jpg',
     title: 'Vestidos',
-    width: '33.333%',
+    width: '25%',
     location: '/vestidos'
   },
   {
     url: 'images/pedidos.jpg',
     title: 'Pedidos',
-    width: '33.333%',
+    width: '25%',
     location: '/pedidos'
+  },
+  {
+    url: 'images/compras.jpg',
+    title: 'Compras',
+    width: '25%',
+    location: '/compras'
   },
 ];
 

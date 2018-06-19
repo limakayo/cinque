@@ -20,6 +20,8 @@ import Switch from 'material-ui/Switch'
 import Dialog, { 
 	DialogContent } from 'material-ui/Dialog';
 
+import PedidosVestido from './PedidosVestido'
+
 
 const styles = theme => ({
 	progress: {
