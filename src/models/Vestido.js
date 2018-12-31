@@ -3,13 +3,9 @@ import { extendObservable } from 'mobx'
 class Vestido {
   constructor() {
     extendObservable(this, {
-      _id: '',
-      nome: '',
+      descricao: '',
       tamanho: '',
-      valor: '',
-      tecido: '',
-      medidas: '',
-      descricao: ''
+      valor: ''
     })
   }
 }

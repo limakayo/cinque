@@ -5,8 +5,6 @@ import Callback from './components/Callback'
 import Home from './components/Home'
 import Clientes from './containers/Clientes'
 import ClientesForm from './containers/ClientesForm'
-import Vestidos from './containers/Vestidos'
-import VestidosForm from './containers/VestidosForm'
 import Pedidos from './containers/Pedidos'
 import PedidosView from './containers/PedidosView'
 import PedidosForm from './containers/PedidosForm'
@@ -32,9 +30,6 @@ const Routes = () => (
     <PrivateRoute exact path="/clientes" component={Clientes}/>
     <PrivateRoute path="/clientes/cadastrar" component={ClientesForm}/>
 	  <PrivateRoute path="/clientes/editar/:id" component={ClientesForm}/>
-    <PrivateRoute exact path="/vestidos" component={Vestidos}/>
-    <PrivateRoute path="/vestidos/cadastrar" component={VestidosForm}/>
-    <PrivateRoute path="/vestidos/editar/:id" component={VestidosForm}/>
     <PrivateRoute exact path="/pedidos" component={Pedidos}/>
     <PrivateRoute path="/pedidos/cadastrar" component={PedidosForm}/>
     <PrivateRoute path="/pedidos/view/:id" component={PedidosView}/>

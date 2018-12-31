@@ -5,7 +5,6 @@ import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsPr
 import DateFnsUtils from 'material-ui-pickers/utils/date-fns-utils'
 import ptLocale from 'date-fns/locale/pt'
 import Routes from './Routes'
-//import { login, isLoggedIn } from './utils/AuthService'
 import red from 'material-ui/colors/red'
 
 const theme = createMuiTheme({
@@ -16,12 +15,6 @@ const theme = createMuiTheme({
 })
 
 class App extends Component {
-  componentDidMount() {
-    /*if (!isLoggedIn()) {
-      login()
-    }*/
-  }
-
   render() {
     return(
       <MuiThemeProvider theme={theme}>

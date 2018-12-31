@@ -4,39 +4,42 @@ import PedidosFormComponent from '../components/pedidos/PedidosForm'
 import { observer } from 'mobx-react'
 import pedidoStore from '../stores/PedidoStore'
 import clienteStore from '../stores/ClienteStore'
-import vestidoStore from '../stores/VestidoStore'
 
 const PedidosFormContainer = observer(class PedidosFormContainer extends Component {
+  constructor() {
+    super()
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleClienteSelected = this.handleClienteSelected.bind(this)
+    this.addVestido = this.addVestido.bind(this)
+    this.removeVestido = this.removeVestido.bind(this)
+    this.changeVestido = this.changeVestido.bind(this)
+  }
   state = {
     title: 'Cadastrar Pedido',
-    vestidosSelecionados: [],
   }
 
   componentDidMount() {
     pedidoStore.reset()
+    this.addVestido()
     const id = this.props.match.params.id
     if (id !== undefined) {
       this.setState({ title: 'Editar Pedido', editar: true })
       pedidoStore.getPedido(id)
     }
     clienteStore.all()
-    vestidoStore.all()
   }
 
   somaVestidos() {
     var valores = []
-    var vestidosSelecionados = pedidoStore.editar ? pedidoStore.vestidosId : pedidoStore.pedido.vestidos
-    var vestidos = vestidoStore.vestidos
-
-    for (var i = vestidos.length - 1; i >= 0; i--) {
-      for (var j = vestidosSelecionados.length - 1; j >= 0; j--) {
-        if (vestidos[i]._id === vestidosSelecionados[j]) {
-          valores.push(vestidos[i].valor)
-        }
-      }
+    for(var i = 0; i < pedidoStore.pedido.vestidos.length; i++) {
+      valores = [...valores, pedidoStore.pedido.vestidos[i].valor]
     }
-
     return this.somaValores(valores)
+  }
+
+  capitalize(string) {
+    return string.replace(/(^|\s)\S/g, l => l.toUpperCase())
   }
 
   somaValores(valores) {
@@ -74,13 +77,30 @@ const PedidosFormContainer = observer(class PedidosFormContainer extends Compone
 
     pedidoStore.change(name, value)
 
-    if (name === 'vestidos') {
-      var currency = this.somaVestidos()
-      pedidoStore.change('valorVestidos', currency)
-    }
-
     var total = this.somaTotal()
     pedidoStore.change('valorTotal', total)
+  }
+
+  addVestido() {
+    pedidoStore.addVestido()
+  }
+
+  removeVestido(id) {
+    pedidoStore.removeVestido(id)
+    var valorVestidos = this.somaVestidos()
+    pedidoStore.change('valorVestidos', valorVestidos)
+  }
+
+  changeVestido(name, id, event) {
+    let value = event.target ? event.target.value : event
+    if (name === 'descricao') {
+      value = this.capitalize(value)
+    }
+    if (name === 'valor') {
+      var valorVestidos = this.somaVestidos()
+      pedidoStore.change('valorVestidos', valorVestidos)
+    }
+    pedidoStore.changeVestido(name, id, value)
   }
 
   handleSubmit() {
@@ -101,13 +121,15 @@ const PedidosFormContainer = observer(class PedidosFormContainer extends Compone
   				<PedidosFormComponent
             pedido={pedidoStore.pedido}
             editar={pedidoStore.editar}
-            vestidosId={pedidoStore.vestidosId}
             isLoaded={pedidoStore.isLoaded}
             clientes={clienteStore.clientes}
-            vestidos={vestidoStore.vestidos}
-            handleChange={this.handleChange.bind(this)}
-            handleSubmit={this.handleSubmit.bind(this)}
-            handleClienteSelected={this.handleClienteSelected.bind(this)}/>
+            vestidos={pedidoStore.vestidos}
+            changeVestido={this.changeVestido}
+            removeVestido={this.removeVestido}
+            addVestido={this.addVestido}
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}
+            handleClienteSelected={this.handleClienteSelected}/>
 				</Content>
 			</div>
 		)

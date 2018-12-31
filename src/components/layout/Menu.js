@@ -18,11 +18,6 @@ const Menu = (props) => {
             <Icon>people</Icon>
           </MenuItem>
           <MenuItem
-            location="/vestidos"
-            title="Vestidos">
-            <Icon>local_florist</Icon>
-          </MenuItem>
-          <MenuItem
             location="/pedidos"
             title="Pedidos">
             <Icon>assignment</Icon>

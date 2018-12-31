@@ -3,6 +3,8 @@ import { URL } from '../utils/Constants'
 import Pedido from '../models/Pedido'
 import history from '../utils/history'
 
+import Vestido from '../models/Vestido'
+
 import { getIdToken } from '../utils/AuthService'
 
 const BEARER = `Bearer ${getIdToken()}`
@@ -14,13 +16,13 @@ class PedidoStore {
 			pedidosPostados: [],
 			pedidosEncomendas: [],
 			pedidosEntregues: [],
-			vestidosId: [],
+			vestidos: [],			
 			editar: false,
 			pedido: new Pedido(),
 			isLoaded: false,
 			reset: action(() => {
 				this.pedido = new Pedido()
-				this.vestidosId = []
+				this.vestidos = []
 				this.isLoaded = true
 				this.editar = false
 			}),
@@ -91,22 +93,30 @@ class PedidoStore {
 					.then(response => response.json())
 					.then(json => {
 						this.pedido = json
-						for (var i = json.vestidos.length - 1; i >= 0; i--) {
-							this.vestidosId = [...this.vestidosId, json.vestidos[i]._id]
-						}
+						this.vestidos = this.pedido.vestidos
 						this.isLoaded = true
 					})
 					.catch(err => console.log(err))
 			}),
 			change: action((name, value) => {
 				this.pedido[name] = value
-
-				if (name === 'vestidos') {
-					this.vestidosId = value
-				}
 			}),
 			clienteSelected: action((cliente) => {
 				this.pedido.cliente = cliente._id
+			}),
+			addVestido: action(() => {
+				var vestido = new Vestido()
+				vestido.id = this.vestidos.length
+				this.vestidos = [...this.vestidos, vestido]
+			}),
+			removeVestido: action((id) => {
+				this.vestidos = this.vestidos.filter((e) => e.id !== id)
+				this.pedido.vestidos = this.vestidos
+			}),
+			changeVestido: action((name, id, value) => {
+				var vestido = this.vestidos[id]
+				vestido[name] = value
+				this.pedido.vestidos = this.vestidos
 			}),
 			post: action(() => {
 				fetch(URL + '/pedidos', {

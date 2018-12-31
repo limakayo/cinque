@@ -1,27 +1,23 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
-import Grid from 'material-ui/Grid'
-import Icon from 'material-ui/Icon'
-import Button from 'material-ui/Button'
-import TextField from 'material-ui/TextField'
-import { observer } from 'mobx-react'
-import { CircularProgress } from 'material-ui/Progress'
-import ClienteDownshift from '../ClienteDownshift'
-import Typography from 'material-ui/Typography'
-import { FormControlLabel, FormControl } from 'material-ui/Form'
-import Select from 'material-ui/Select'
-import { MenuItem } from 'material-ui/Menu'
-import Input, { InputLabel } from 'material-ui/Input'
-import Checkbox from 'material-ui/Checkbox'
-import { ListItemText } from 'material-ui/List'
-import Currency from '../Currency'
-import Switch from 'material-ui/Switch'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
+import Grid from 'material-ui/Grid';
+import Icon from 'material-ui/Icon';
+import Button from 'material-ui/Button';
+import TextField from 'material-ui/TextField';
+import { observer } from 'mobx-react';
+import { CircularProgress } from 'material-ui/Progress';
+import ClienteDownshift from '../ClienteDownshift';
+import Typography from 'material-ui/Typography';
+import { FormControlLabel, FormControl } from 'material-ui/Form';
+import Select from 'material-ui/Select';
+import { MenuItem } from 'material-ui/Menu';
+import Input, { InputLabel } from 'material-ui/Input';
+import Currency from '../Currency';
+import Switch from 'material-ui/Switch';
 import Dialog, { 
 	DialogContent } from 'material-ui/Dialog';
-
-import PedidosVestido from './PedidosVestido'
-
+import PedidosVestido from './PedidosVestido';
 
 const styles = theme => ({
 	progress: {
@@ -37,6 +33,19 @@ const styles = theme => ({
     bottom: 16,
     right: 16
   },
+  fabContainer: {
+		position: 'fixed',
+		bottom: 0,
+		right: 0
+	},
+	fabFrame: {
+		position: 'relative'
+	},
+	fabDone: {
+		position: 'absolute',
+		bottom: theme.spacing.unit * 2,
+		right: theme.spacing.unit * 2
+	},
 	container: {
 		flexWrap: 'wrap',
 		width: '100%',
@@ -69,17 +78,6 @@ const styles = theme => ({
 	}
 })
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
 const PedidosFormComponent = observer(class PedidosFormComponent extends Component {
 
 	state = {
@@ -97,11 +95,13 @@ const PedidosFormComponent = observer(class PedidosFormComponent extends Compone
 			classes,
 			handleChange,
 			handleClienteSelected,
+			addVestido,
+			changeVestido,
+			removeVestido,
 			clientes,
 			vestidos,
 			isLoaded,
 			pedido,
-			vestidosId,
 			editar,
 		} = this.props
 
@@ -141,49 +141,38 @@ const PedidosFormComponent = observer(class PedidosFormComponent extends Compone
 		          	</div>
 							}
 						</Grid>
-						<Grid item xs={12}>
-							<FormControl className={classes.formControl}>
-			          <InputLabel htmlFor="select-multiple-checkbox">Vestidos</InputLabel>
-			          <Select
-			            multiple
-			            value={editar ? vestidosId.slice() : pedido.vestidos.slice()}
-			            onChange={handleChange.bind(this, 'vestidos')}
-			            input={<Input id="select-multiple-checkbox" />}
-			            renderValue={selecionados => (
-			            	<div>
-			            		{vestidos.slice().map(v => (
-			            			selecionados.map(s => (
-			            				v._id === s ? v.nome + ' ' + v.tamanho + ', ' : null
-			            			))
-			            		))}
-				            </div>
-			            )}
-			            MenuProps={MenuProps}
-			          >
-			            {vestidos.map(e => (
-			              <MenuItem key={e._id} value={e._id} label={e.nome}>
-			                <Checkbox checked={editar ? vestidosId.indexOf(e._id) > -1 : pedido.vestidos.indexOf(e._id) > -1} />
-			                <ListItemText primary={e.nome + ' ' + e.tamanho} secondary={e.valor} />
-			              </MenuItem>
-			            ))}
-			          </Select>
-			        </FormControl>
-			        <Typography type="caption" style={{ marginTop: '0.35em', color: 'rgba(0, 0, 0, 0.54)' }}>
-            		Selecione os vestidos
-          		</Typography>
-						</Grid>
-						<Grid item xs={12}>
-							<TextField
-					      id="descricao"
-					      label="Descrição"
-					      multiline
-          			rowsMax="4"
-					      className={classes.textField}
-					      value={pedido.descricao}
-								onChange={handleChange.bind(this, 'descricao')}/>
-						</Grid>
+					</Grid>
+					<Grid container spacing={16} style={{ paddingTop: 24 }}>
+		        <Grid item xs={12}>
+			        <Typography variant="subheading">
+				        Vestidos
+				      </Typography>
+				    </Grid>
+				  </Grid>
+
+				  {vestidos.map((vestido) => (
+				  	<PedidosVestido
+				  		changeVestido={changeVestido}
+				  		removeVestido={removeVestido}
+				  		vestido={vestido}
+				  		key={vestido.id} />
+				  ))}
+
+			  	<Grid container spacing={16}>
+				  	<Grid item xs={12}>
+		          <Button 
+		          	color="primary" 
+		          	className={classes.button}
+		          	style={{ marginRight: 16 }}
+		          	onClick={addVestido}>
+				        Adicionar outro
+				      </Button>
+		        </Grid>
+				  </Grid>
+
+				  <Grid container spacing={16} style={{ paddingTop: 16 }}>
 						<Grid item xs={12} style={{ paddingBottom: 0 }}>
-							<Typography variant="title" gutterBottom>
+							<Typography variant="subheading" gutterBottom>
 				        Entrega
 				      </Typography>
 						</Grid>
@@ -227,16 +216,6 @@ const PedidosFormComponent = observer(class PedidosFormComponent extends Compone
 						{pedido.formaEntrega === 'Correios' ? (
 							<Grid item xs={12} sm={6} md={3}>
 						    <TextField
-						      id="prazoCorreios"
-						      label="Prazo Correios"
-						      className={classes.textField}
-						      value={pedido.prazoCorreios}
-									onChange={handleChange.bind(this, 'prazoCorreios')}/>
-							</Grid>
-						) : null}
-						{pedido.formaEntrega === 'Correios' ? (
-							<Grid item xs={12} sm={6} md={3}>
-						    <TextField
 						      id="codigoCorreios"
 						      label="Código Correios"
 						      className={classes.textField}
@@ -271,7 +250,7 @@ const PedidosFormComponent = observer(class PedidosFormComponent extends Compone
 				        }}/>
 						</Grid>
 						<Grid item xs={12} style={{ paddingBottom: 0 }}>
-							<Typography variant="title" gutterBottom>
+							<Typography variant="subheading" gutterBottom>
 				        Valores
 				      </Typography>
 						</Grid>
@@ -328,7 +307,7 @@ const PedidosFormComponent = observer(class PedidosFormComponent extends Compone
 		          </FormControl>
 						</Grid>
 						<Grid item xs={12} style={{ paddingBottom: 0 }}>
-							<Typography variant="title" gutterBottom>
+							<Typography variant="subheading" gutterBottom>
 				        Pagamento
 				      </Typography>
 						</Grid>
@@ -382,16 +361,7 @@ const PedidosFormComponent = observer(class PedidosFormComponent extends Compone
 				          shrink: true,
 				        }}/>
 						</Grid>
-						<Button
-							variant="fab"
-							color="primary"
-							aria-label="add"
-							className={classes.floatButton}
-							onClick={this.handleClickOpenLoading}>
-							<Icon>done</Icon>
-				    </Button>
 					</Grid>
-
 					<Dialog open={this.state.openLoadingDialog}>
 	          <DialogContent style={{ width: 200 }}>
 	            <div style={{ width: '100%', textAlign: 'center' }}>
@@ -400,6 +370,18 @@ const PedidosFormComponent = observer(class PedidosFormComponent extends Compone
 	            </div>
 	          </DialogContent>
 	        </Dialog>
+	        <div className={classes.fabContainer}>
+		  			<div className={classes.fabFrame}>
+				  		<Button 
+				  			variant="fab" 
+				  			color="primary" 
+				  			aria-label="done" 
+				  			className={classes.fabDone}
+				  			onClick={this.handleClickOpenLoading}>
+				        <Icon>done</Icon>
+				      </Button>
+				    </div>
+			    </div>
 				</form>
 				) : (
           <div className={classes.progressContainer}>

@@ -91,15 +91,9 @@ const images = [
     location: '/clientes'
   },
   {
-    url: 'images/vestidos.jpg',
-    title: 'Vestidos',
-    width: '25%',
-    location: '/vestidos'
-  },
-  {
     url: 'images/pedidos.jpg',
     title: 'Pedidos',
-    width: '25%',
+    width: '50%',
     location: '/pedidos'
   },
   {

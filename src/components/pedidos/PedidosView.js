@@ -151,9 +151,9 @@ const PedidosViewComponent = observer(class PedidosViewComponent extends Compone
 					        Vestidos
 					      </Typography>
 					      {pedido.vestidos && pedido.vestidos.map((v) => (
-					      	<div key={v._id}>
+					      	<div key={v.id}>
 						      	<Typography gutterBottom>
-						         {v.nome + ' ' + v.tamanho + ' - R$ ' + v.valor}
+						         {v.descricao + ' ' + v.tamanho + ' - R$ ' + v.valor}
 						      	</Typography>
 					      	</div>
 					      ))}
